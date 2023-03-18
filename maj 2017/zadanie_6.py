@@ -107,16 +107,43 @@ def is_pixel_contrasting(x, y, pixels):
             return True
     return False
 
+"""
+Podaj długość najdłuższej linii pionowej (czyli ciągu kolejnych pikseli w tej samej kolumnie
+obrazka), złożonej z pikseli tej samej jasności. 
+"""
+def zad4(filepath):
+    longest_line_counter = 0
+    pixels = get_pixels(filepath=filepath)
+
+    for column in range(COLUMN_NUMBER):
+        counter = 1
+        max_counter = 0
+        for row in range(ROW_NUMBER-1):
+            if pixels[row][column] == pixels[row+1][column]:
+                counter+=1
+            else:
+                if counter > max_counter:
+                    max_counter = counter
+                counter = 1
+        if longest_line_counter < max_counter:
+            longest_line_counter = max_counter
+    return longest_line_counter
+
+
+results = ""
+
 print("ZADANIE 1")
 answer = zad1(przyklad)
 print("Przyklad:")
 print(f"\tWartość najjaśniejszego piksela : {answer[1]}")
 print(f"\tWartość najciemniejszego piksela : {answer[0]}")
 
-zad1_ans = zad1(dane)
+answer = zad1(dane)
 print("Zadanie:")
 print(f"\tWartość najjaśniejszego piksela : {answer[1]}")
 print(f"\tWartość najciemniejszego piksela : {answer[0]}")
+
+results += f"1\n{answer[1]} (najjaśniejszy) i {answer[0]} (najciemniejszy)\n\n"
 
 ##################################################
 print("\nZADANIE 2")
@@ -128,6 +155,8 @@ answer = zad2(dane)
 print("Zadanie:")
 print(f"\tOdpowiedź: {answer}")
 
+results += f"2\n{answer}\n\n"
+
 ##################################################
 print("\nZADANIE 3")
 answer = zad3(przyklad)
@@ -137,3 +166,21 @@ print(f"\tOdpowiedź: {answer}")
 answer = zad3(dane)
 print("Zadanie:")
 print(f"\tOdpowiedź: {answer}")
+
+results += f"3\n{answer}\n\n"
+
+##################################################
+print("\nZADANIE 4")
+answer = zad4(przyklad)
+print("Przyklad:")
+print(f"\tOdpowiedź: {answer}")
+
+answer = zad4(dane)
+print("Zadanie:")
+print(f"\tOdpowiedź: {answer}")
+
+results += f"4\n{answer}\n\n"
+
+
+with open('wynik6.txt', 'w') as f:
+    f.write(results)
